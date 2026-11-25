@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reservas Puntada Terca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Work+Sans:wght@400;500;700&display=swap">
+<style>
+/* VOICE: cercana y práctica, como la maestra del taller que explica sin apuro
+   IDEA: etiquetas de tela cosidas a mano sobre manta cruda, medidas con cinta métrica
+   PICTURE: la lista de clases; cada contador es un tramo de cinta: lugares en añil, máquinas en rosa
+   COLOUR and TYPE: añil #21386E, rosa #D6246E, cempasúchil #E5A13A, tinta #2A2A2A sobre crudo; DM Serif Display + Work Sans
+   LAYOUT: una columna a 360 px, rejilla de tarjetas en pantallas amplias */
+:root{color-scheme:light;
+--bg:#21386e;--card:#f6efe1;--ink:light-dark(#2a2a2a,#f3ecdd);--mut:light-dark(#5e5a55,#b9b8c8);
+--anil:light-dark(#21386e,#a9bdf2);--anilT:light-dark(#e2e6ef,#24325c);--rosa:light-dark(#b81c5c,#ff6fa6);--rosaF:light-dark(#d6246e,#e4447f);--rosaT:light-dark(#f8e1ea,#3a2348);
+--oro:#e5a13a;--hiloC:light-dark(rgba(33,56,110,.38),rgba(169,189,242,.38));--sobre:light-dark(#ffffff,#131b33);--hilo:rgba(255,255,255,.045);--line:light-dark(#d9cfba,#34416c);--ok:light-dark(#1d6b45,#7fd7a6)}
+:root,:root[data-theme=light],:root[data-theme=dark]{color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;color:var(--ink);font:17px/1.55 "Work Sans",system-ui,sans-serif;overflow-x:clip;background-color:var(--bg);
+background-image:repeating-linear-gradient(0deg,var(--hilo) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,var(--hilo) 0 1px,transparent 1px 4px)}
+h1,h2,.code{font-family:"DM Serif Display",Georgia,serif;font-weight:400}
+.top{position:relative;color:#fff;padding:24px max(5vw,16px) 28px;background-color:#d6246e;
+background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 1px,transparent 1px 4px)}
+.cinta{display:flex;overflow:hidden;height:34px;background:#e5a13a;color:#2a2a2a;border-block:1px solid rgba(42,42,42,.35);box-shadow:0 3px 8px -4px rgba(0,0,0,.35)}
+.cinta span{flex:0 0 48px;padding:13px 0 0 4px;font:700 13px/1 "Work Sans",system-ui,sans-serif;font-variant-numeric:tabular-nums;
+background:linear-gradient(#2a2a2a,#2a2a2a) 0 0/1.5px 14px no-repeat,linear-gradient(#2a2a2a,#2a2a2a) 24px 0/1px 10px no-repeat,repeating-linear-gradient(90deg,transparent 0 4.8px,#2a2a2a 4.8px 5.8px) 0 0/100% 6px no-repeat}
+.top h1{margin:0;font-size:clamp(34px,8vw,52px);line-height:1.05;text-wrap:balance}
+.top p{margin:8px 0 0;max-width:58ch}
+main{max-width:1240px;margin:0 auto;padding:20px max(4vw,12px) 32px}
+.aviso,.flash{border:2px solid var(--rosa);background:var(--card);border-radius:10px;padding:12px 14px;margin:0 0 16px}
+.aviso strong{color:var(--rosa)}.flash{border-color:var(--ok)}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));align-items:start}
+.card{background:var(--card);border-radius:14px;padding:18px 16px 16px;position:relative;box-shadow:0 8px 20px -10px rgba(0,0,0,.5)}
+.card>*{position:relative}
+.card>.pesp,.conf .ticket>.pesp{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.pesp rect{x:8px;y:8px;width:calc(100% - 16px);height:calc(100% - 16px);rx:10px;fill:none;stroke:#21386e;stroke-opacity:.8;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:8 6 11 5 7 7 10 5 9 6 6 5 12 6}
+.ticket .pesp rect{stroke:#b81c5c;stroke-opacity:.9}
+.card,.ticket{--hiloC:rgba(33,56,110,.45)}
+.etq{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-bottom:4px}
+.nivel{font-size:14px;font-weight:700;background:var(--oro);color:#2a2a2a;padding:3px 12px;border-radius:3px;outline:1px dashed rgba(42,42,42,.5);outline-offset:-4px}
+.ultimos{font-size:14px;font-weight:700;padding:3px 12px;border-radius:3px;background:#d6246e;color:#fff;white-space:nowrap;outline:1px dashed rgba(255,255,255,.7);outline-offset:-4px}
+.card h2{font-size:26px;line-height:1.1;margin:0 0 8px}
+.meta{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;font-size:16px}
+.meta dt{color:var(--mut)}.meta dd{margin:0}
+.nw{white-space:nowrap}
+.cont{margin:14px 0 4px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.cnt{border-radius:10px;padding:10px 10px 12px;display:grid;gap:2px;align-content:start}
+.cnt.lug{background:var(--anilT);color:var(--anil)}
+.cnt.maq{background:var(--rosaT);color:var(--rosaF)}
+.cnt.maq .big small,.cnt.lug .big small{color:var(--mut)}
+.cnt .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;font-weight:700;line-height:1.25;color:var(--ink)}
+.cnt .big{font-size:clamp(30px,9vw,38px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.cnt .big small{font-size:15px;font-weight:400;color:var(--mut);margin-left:4px}
+.lug{--tint:var(--anilT)}.maq{--tint:var(--rosaT)}
+.tape{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));height:16px;margin-top:8px;border:1.5px solid currentColor;border-radius:2px;overflow:hidden}
+.tape i{border-left:2px solid var(--tint);background:repeating-linear-gradient(135deg,transparent 0 3px,color-mix(in srgb,currentColor 30%,transparent) 3px 4px)}
+.tape i:first-child{border-left:0}.tape i.lib{background:currentColor}
+.marcas{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-top:2px;font-variant-numeric:tabular-nums}
+.solo{margin:10px 0 0;font-size:15px;font-weight:700;color:var(--rosa)}
+.llena{margin:12px 0 0;padding:12px;border-radius:10px;border:2px dashed var(--rosa);font-weight:700;color:var(--rosa);text-align:center;font-size:20px}
+button{font:inherit;font-weight:700;min-height:44px;padding:10px 16px;border-radius:10px;border:2px solid var(--anil);background:var(--anil);color:var(--sobre);cursor:pointer}
+button.sec{background:transparent;color:var(--anil)}
+button.peligro{background:transparent;border-color:var(--rosa);color:var(--rosa)}
+button.peligro.lleno{background:var(--rosaF);border-color:var(--rosaF);color:#fff}
+.lnk{background:none;border:0;padding:10px 4px;color:var(--anil);text-decoration:underline;text-underline-offset:3px}
+button:focus-visible,input:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+.abrir{width:100%;margin-top:12px}
+form{margin-top:14px;display:grid;gap:12px}
+label.f{display:grid;gap:4px;font-weight:700;font-size:16px}
+input[type=text],input[type=email]{font:inherit;font-size:16px;min-height:46px;padding:8px 12px;border-radius:8px;border:2px solid var(--line);background:light-dark(#fff,#111a33);color:var(--ink)}
+input[aria-invalid=true]{border-color:var(--rosaF)}
+.err{color:var(--rosa);font-size:15px;font-weight:700}
+.err:empty{display:none}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:6px}
+legend{font-weight:700;font-size:16px;margin-bottom:4px;padding:0}
+.op{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:2px solid var(--line);border-radius:10px;cursor:pointer;min-height:44px;background:light-dark(#fff,#111a33)}
+.op:has(input:checked){border-color:var(--anil)}
+.op input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--anil);flex:none}
+.op small{display:block;color:var(--mut);font-size:14px}
+.op.off{cursor:not-allowed;border-style:dashed;border-color:var(--hiloC);background:rgba(246,239,225,.6);color:#5a554e}
+.op.off input{opacity:.5}
+.op.off small{color:var(--rosa);font-weight:700}
+.total{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;border-top:2px dashed var(--hiloC);padding-top:10px}
+.total b{font-size:26px;white-space:nowrap;color:var(--anil);font-variant-numeric:tabular-nums}
+.acc{display:flex;flex-wrap:wrap;gap:10px}
+.conf{max-width:560px;margin:0 auto}
+.conf .ticket{background:var(--card);border-radius:14px;padding:46px 20px 22px;position:relative;box-shadow:0 6px 18px -12px rgba(33,56,110,.45)}
+.conf .ticket::after{content:"";position:absolute;top:16px;left:50%;width:18px;height:18px;margin-left:-9px;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 0 3px var(--oro)}
+.conf .ticket>*{position:relative}
+.code{font-size:clamp(40px,12vw,58px);line-height:1;color:#21386e;letter-spacing:.04em;margin:4px 0 14px;font-variant-numeric:tabular-nums}
+.conf h2{font-size:28px;margin:0 0 6px;line-height:1.1}
+.conf .meta{gap:6px 12px}
+.preg{margin-top:12px;padding:12px;border-radius:10px;background:var(--rosaT)}
+.preg p{margin:0 0 10px}
+footer .lnk{color:#f6efe1}
+footer{max-width:1240px;margin:0 auto;padding:0 max(4vw,12px) 32px;color:#e3e6ef;font-size:14px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between}
+.quieto .card,.ticket.quieto{animation:none!important}
+@media (prefers-reduced-motion:no-preference){.card,.ticket{animation:in .35s ease both}@keyframes in{from{opacity:0;transform:translateY(6px)}}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="mano0" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="2"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+  <filter id="mano1" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".03" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+  <filter id="mano2" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".04" numOctaves="2" seed="13"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+</svg>
+<header class="top">
+  <h1>Puntada Terca Taller</h1>
+  <p>Clases de costura en Oaxaca. Escoge tu clase y aparta tu lugar con calma. Si no tienes máquina, aquí te prestamos una mientras alcancen. Pagas en el taller, el mismo día.</p>
+</header>
+<div class="cinta" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span>32</span><span>33</span><span>34</span><span>35</span><span>36</span><span>37</span><span>38</span><span>39</span><span>40</span></div>
+<main>
+  <div id="avisoStorage" class="aviso" hidden role="alert"><strong>No se pudo guardar.</strong> Este navegador no deja guardar datos, así que tus reservas se perderán al recargar la página. Anota tu código de reserva.</div>
+  <div id="flash" class="flash" hidden role="status"></div>
+  <section id="vistaClases" aria-label="Clases disponibles"><div class="grid" id="grid"></div></section>
+  <section id="vistaConf" hidden aria-live="polite"></section>
+</main>
+<footer>
+  <span>Precios de prueba en pesos mexicanos.</span>
+  <span id="resetZona"><button class="lnk" id="btnReset" type="button">Restaurar datos sintéticos</button></span>
+</footer>
+<script>
+{
+const KEY = 'puntada-terca-reservas-v3';
+const CARGO_MAQUINA = 60;
+const CLASES = [
+  {id:'c1', nombre:'Máquina desde cero', nivel:'Principiante', fecha:'2026-12-05', ini:'10:00', fin:'12:30', dur:'2 h 30 min', precio:420, lleva:'Una funda de almohadón', lugares:8, maquinas:5},
+  {id:'c2', nombre:'Bolsa de manta con forro', nivel:'Principiante', fecha:'2026-12-05', ini:'16:00', fin:'19:00', dur:'3 h', precio:480, lleva:'Tu bolsa', lugares:8, maquinas:5},
+  {id:'c3', nombre:'Ajuste de pantalón', nivel:'Básico', fecha:'2026-12-08', ini:'18:00', fin:'20:30', dur:'2 h 30 min', precio:450, lleva:'Tu pantalón ajustado', lugares:6, maquinas:4},
+  {id:'c4', nombre:'Falda con resorte', nivel:'Básico', fecha:'2026-12-12', ini:'10:00', fin:'13:30', dur:'3 h 30 min', precio:620, lleva:'Tu falda', lugares:6, maquinas:4},
+  {id:'c5', nombre:'Cojín con cierre invisible', nivel:'Básico', fecha:'2026-12-17', ini:'18:00', fin:'20:30', dur:'2 h 30 min', precio:460, lleva:'Tu cojín', lugares:8, maquinas:5},
+  {id:'c6', nombre:'Blusa con bordado a máquina', nivel:'Intermedio', fecha:'2026-12-19', ini:'10:00', fin:'14:00', dur:'4 h', precio:780, lleva:'Tu blusa', lugares:6, maquinas:3}
+];
+// Reservas sintéticas cargadas: [clase, nombre, correo, máquina]. Vacío para pruebas: todos los contadores arrancan completos.
+const SEED = [];
+const $ = s => document.querySelector(s);
+const esc = v => String(v).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const money = n => '$' + n.toLocaleString('es-MX') + ' MXN';
+const fmtFecha = f => { const [y,m,d] = f.split('-').map(Number); return new Intl.DateTimeFormat('es-MX',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(y,m-1,d))); };
+const pespunte = n => `<svg class="pesp" aria-hidden="true"><rect style="filter:url(#mano${n % 3});stroke-dashoffset:${(n * 7) % 30}"></rect></svg>`;
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const clase = id => CLASES.find(c => c.id === id);
+const normCorreo = s => s.trim().toLowerCase();
+
+let ultimoConf = null, storageOk = true, db = {reservas: []}, abierta = null, drafts = {}, preguntaCancel = false;
+
+function seedDb(){
+  let i = 0;
+  return {reservas: SEED.map(([id,nombre,correo,maquina]) => {
+    const c = clase(id);
+    return {codigo:'EJ' + String(++i).padStart(3,'0'), clase:id, nombre, correo, maquina, total: c.precio + (maquina==='taller'?CARGO_MAQUINA:0)};
+  })};
+}
+function load(){
+  let raw = null;
+  try { raw = localStorage.getItem(KEY); } catch(e){ storageOk = false; }
+  if (raw){ try { const p = JSON.parse(raw); if (p && Array.isArray(p.reservas)) { db = p; return; } } catch(e){} }
+  if (!storageOk && db.reservas.length) return; // conservar lo que hay en memoria
+  db = seedDb(); save();
+}
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(db)); storageOk = true; }
+  catch(e){ storageOk = false; }
+  $('#avisoStorage').hidden = storageOk;
+  return storageOk;
+}
+function refrescar(){ if (storageOk) load(); }
+function cuenta(c){
+  const rs = db.reservas.filter(r => r.clase === c.id);
+  const usadasMaq = rs.filter(r => r.maquina === 'taller').length;
+  return {lugaresLibres: Math.max(0, c.lugares - rs.length), maqLibres: Math.max(0, c.maquinas - usadasMaq), ocupados: rs.length, maqUsadas: usadasMaq};
+}
+function cinta(total, libres){
+  let h = ''; for (let i = 0; i < total; i++) h += `<i class="${i < libres ? 'lib' : ''}"></i>`;
+  return `<span class="tape" style="--n:${total}" aria-hidden="true">${h}</span><span class="marcas" aria-hidden="true"><span>0</span><span>${total}</span></span>`;
+}
+
+function tarjeta(c){
+  const k = cuenta(c), d = drafts[c.id] || {};
+  const llena = k.lugaresLibres === 0;
+  const sinMaq = k.maqLibres === 0;
+  const maqSel = sinMaq && d.maquina === 'taller' ? '' : (d.maquina || '');
+  let cuerpo;
+  if (llena) cuerpo = `<p class="llena">Clase llena</p>`;
+  else if (abierta !== c.id) cuerpo = `<button class="abrir" type="button" data-abrir="${c.id}">Apartar mi lugar</button>`;
+  else {
+    const total = c.precio + (maqSel === 'taller' ? CARGO_MAQUINA : 0);
+    cuerpo = `<form data-form="${c.id}" novalidate>
+      <label class="f" for="n-${c.id}">Nombre completo
+        <input type="text" id="n-${c.id}" name="nombre" autocomplete="name" value="${esc(d.nombre||'')}" required></label>
+      <span class="err" id="en-${c.id}"></span>
+      <label class="f" for="e-${c.id}">Correo
+        <input type="email" id="e-${c.id}" name="correo" autocomplete="email" inputmode="email" value="${esc(d.correo||'')}" required></label>
+      <span class="err" id="ee-${c.id}"></span>
+      <fieldset>
+        <legend>Máquina</legend>
+        <label class="op"><input type="radio" name="maquina" value="propia" ${maqSel==='propia'?'checked':''}><span>Llevo la mía<small>Sin cargo extra. Tráela con su cable y pedal.</small></span></label>
+        <label class="op${sinMaq?' off':''}"><input type="radio" name="maquina" value="taller" ${sinMaq?'disabled':''} ${maqSel==='taller'?'checked':''}><span>Uso una del taller<small>${sinMaq ? 'Sin máquinas: hay que traer la propia' : '+ ' + money(CARGO_MAQUINA) + ' por la clase'}</small></span></label>
+      </fieldset>
+      <span class="err" id="em-${c.id}"></span>
+      <div class="total"><span>Total a pagar en el taller</span><b id="t-${c.id}">${money(total)}</b></div>
+      <div class="acc"><button type="submit">Confirmar mi lugar</button><button type="button" class="sec" data-cerrar="${c.id}">Cancelar</button></div>
+    </form>`;
+  }
+  return `<article class="card" id="card-${c.id}">${pespunte(CLASES.indexOf(c))}
+    <div class="etq"><span class="nivel">${esc(c.nivel)}</span>${!llena && k.lugaresLibres <= 2 ? '<span class="ultimos">Últimos lugares</span>' : ''}</div>
+    <h2>${esc(c.nombre)}</h2>
+    <dl class="meta">
+      <dt>Día</dt><dd>${esc(cap(fmtFecha(c.fecha)))}</dd>
+      <dt>Horario</dt><dd><span class="nw">${c.ini}–${c.fin}</span> · <span class="nw">${esc(c.dur)}</span></dd>
+      <dt>Precio</dt><dd class="nw">${money(c.precio)}</dd>
+      <dt>Te llevas</dt><dd>${esc(c.lleva)}</dd>
+    </dl>
+    <div class="cont">
+      <div class="cnt lug" role="group" aria-label="${k.lugaresLibres} de ${c.lugares} lugares libres"><span class="lbl">Lugares libres</span><span class="big num">${k.lugaresLibres}<small>de ${c.lugares}</small></span>${cinta(c.lugares,k.lugaresLibres)}</div>
+      <div class="cnt maq" role="group" aria-label="${k.maqLibres} de ${c.maquinas} máquinas del taller libres"><span class="lbl">Máquinas libres</span><span class="big num">${k.maqLibres}<small>de ${c.maquinas}</small></span>${cinta(c.maquinas,k.maqLibres)}</div>
+    </div>
+    ${!llena && sinMaq ? '<p class="solo">Sin máquinas del taller: abierta solo para quien lleva la suya.</p>' : ''}
+    ${cuerpo}
+  </article>`;
+}
+function renderClases(){
+  $('#grid').innerHTML = CLASES.map(tarjeta).join('');
+  if (!$('#grid').classList.contains('quieto')) setTimeout(() => $('#grid').classList.add('quieto'), 400);
+}
+
+function validar(c, f, mostrar){
+  const nombre = f.nombre.value.trim(), correo = f.correo.value.trim();
+  const sel = f.querySelector('input[name=maquina]:checked');
+  const errs = {n:'', e:'', m:''};
+  const letras = (nombre.match(/\p{L}/gu) || []).length;
+  if (!nombre) errs.n = 'Escribe tu nombre completo, por favor.';
+  else if (letras < 3) errs.n = 'Tu nombre necesita al menos 3 letras.';
+  if (!correo) errs.e = 'Escribe tu correo, por favor.';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo)) errs.e = 'Revisa tu correo: le falta algo. Debe verse así: nombre@correo.com';
+  else if (db.reservas.some(r => r.clase === c.id && normCorreo(r.correo) === normCorreo(correo))) errs.e = 'Con este correo ya hay un lugar apartado en esta clase.';
+  if (!sel) errs.m = 'Cuéntame: ¿traes tu máquina o usas una del taller?';
+  else if (sel.value === 'taller' && cuenta(c).maqLibres === 0) errs.m = 'Se acabaron las máquinas del taller. Si traes la tuya, todavía alcanzas lugar.';
+  if (mostrar){
+    [['n','n'],['e','e'],['m','m']].forEach(([k]) => { $('#e'+k+'-'+c.id).textContent = errs[k]; });
+    f.nombre.setAttribute('aria-invalid', errs.n ? 'true' : 'false');
+    f.correo.setAttribute('aria-invalid', errs.e ? 'true' : 'false');
+  }
+  return {ok: !errs.n && !errs.e && !errs.m, errs, nombre, correo, maquina: sel && sel.value};
+}
+function nuevoCodigo(){
+  const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789'; let c;
+  do { c = ''; for (let i = 0; i < 6; i++) c += A[Math.floor(Math.random()*A.length)]; } while (db.reservas.some(r => r.codigo === c));
+  return c;
+}
+function reservar(c, f){
+  refrescar(); // releer por si cambió en otra pestaña
+  const k = cuenta(c);
+  if (k.lugaresLibres === 0){ abierta = null; flash('La clase se llenó mientras llenabas el formulario.'); renderClases(); return; }
+  const v = validar(c, f, true);
+  if (!v.ok){ renderClasesConservando(c, f, v); return; }
+  const r = {codigo: nuevoCodigo(), clase: c.id, nombre: v.nombre, correo: v.correo, maquina: v.maquina, total: c.precio + (v.maquina === 'taller' ? CARGO_MAQUINA : 0)};
+  db.reservas.push(r); save();
+  delete drafts[c.id]; abierta = null;
+  location.hash = 'r-' + r.codigo;
+  render();
+}
+function renderClasesConservando(c, f, v){
+  // si los contadores cambiaron (p. ej. sin máquinas), redibujar y volver a mostrar errores
+  const sel = f.querySelector('input[name=maquina]:checked');
+  drafts[c.id] = {nombre: f.nombre.value, correo: f.correo.value, maquina: sel ? sel.value : ''};
+  renderClases();
+  const nf = document.querySelector(`[data-form="${c.id}"]`);
+  if (nf){ ['n','e','m'].forEach(k => { $('#e'+k+'-'+c.id).textContent = v.errs[k]; }); nf.nombre.setAttribute('aria-invalid', v.errs.n ? 'true' : 'false'); nf.correo.setAttribute('aria-invalid', v.errs.e ? 'true' : 'false'); const first = nf.querySelector('[aria-invalid=true]') || nf.querySelector('input[name=maquina]'); if (first) first.focus(); }
+}
+
+function flash(msg){ const el = $('#flash'); el.textContent = msg; el.hidden = !msg; }
+
+// RFC 5545: líneas de máximo 75 octetos; las siguientes empiezan con un espacio
+function doblar(linea){
+  const enc = new TextEncoder(); let out = '', bytes = 0, max = 75;
+  for (const ch of linea){ const b = enc.encode(ch).length; if (bytes + b > max){ out += '\r\n '; bytes = 1; max = 75; } out += ch; bytes += b; }
+  return out;
+}
+function ics(r, c){
+  const [y,m,d] = c.fecha.split('-').map(Number);
+  const t = (hm) => { const [h,mi] = hm.split(':').map(Number); return new Date(Date.UTC(y,m-1,d,h+6,mi)).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,''); }; // Oaxaca: UTC−6
+  const e = s => String(s).replace(/\\/g,'\\\\').replace(/[,;]/g, x => '\\' + x).replace(/\n/g,'\\n');
+  const stamp = new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+  const desc = `Código de reserva: ${r.codigo}\nMáquina: ${r.maquina==='taller'?'Uso una del taller':'Llevo la mía'}\nTotal a pagar en el taller: ${money(r.total)}\nTe llevas: ${c.lleva}`;
+  return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Puntada Terca Taller//Reservas//ES','CALSCALE:GREGORIAN','METHOD:PUBLISH','BEGIN:VEVENT',
+    'UID:' + r.codigo + '@puntada-terca','DTSTAMP:' + stamp,'DTSTART:' + t(c.ini),'DTEND:' + t(c.fin),
+    'SUMMARY:' + e('Clase: ' + c.nombre),'LOCATION:' + e('Puntada Terca Taller, Oaxaca'),'DESCRIPTION:' + e(desc),
+    'END:VEVENT','END:VCALENDAR'].map(doblar).join('\r\n') + '\r\n';
+}
+let downloadsApi;
+async function descargarIcs(r, c){
+  const data = ics(r, c), filename = 'puntada-terca-' + r.codigo + '.ics', msg = $('#icsMsg');
+  try {
+    if (downloadsApi === undefined && window.claude && claude.use) downloadsApi = await claude.use('downloads');
+    if (downloadsApi){ await downloadsApi.save({filename, data}); msg.textContent = ''; return; }
+    const url = URL.createObjectURL(new Blob([data], {type:'text/calendar;charset=utf-8'}));
+    const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  } catch(e){ msg.textContent = 'No se pudo descargar el archivo. Puedes anotar la fecha a mano: ' + cap(fmtFecha(c.fecha)) + ', ' + c.ini + '.'; }
+}
+
+function renderConf(codigo){
+  const r = db.reservas.find(x => x.codigo === codigo);
+  const v = $('#vistaConf');
+  if (!r){ v.innerHTML = `<div class="conf"><div class="ticket">${pespunte(1)}<h2>No encontramos esa reserva</h2><p>Puede que se haya cancelado o que el código no exista.</p><button type="button" data-volver>Ver las clases</button></div></div>`; return; }
+  const c = clase(r.clase);
+  const repetida = ultimoConf === codigo; ultimoConf = codigo;
+  v.innerHTML = `<div class="conf"><div class="ticket${repetida ? ' quieto' : ''}">${pespunte(2)}
+    <p style="margin:0;color:var(--mut)">¡Listo, ya tienes tu lugar! Guarda este código y enséñalo al llegar:</p>
+    <div class="code">${esc(r.codigo)}</div>
+    <h2>${esc(c.nombre)}</h2>
+    <dl class="meta">
+      <dt>Fecha</dt><dd>${esc(cap(fmtFecha(c.fecha)))}, <span class="nw">${c.ini}–${c.fin}</span></dd>
+      <dt>A nombre de</dt><dd>${esc(r.nombre)}</dd>
+      <dt>Máquina</dt><dd>${r.maquina === 'taller' ? 'Uso una del taller (+ ' + money(CARGO_MAQUINA) + ')' : 'Llevo la mía'}</dd>
+      <dt>Te llevas</dt><dd>${esc(c.lleva)}</dd>
+      <dt>Total</dt><dd><b class="nw" style="font-size:22px">${money(r.total)}</b><br><small style="font-size:14px">Se paga en el taller el día de la clase.</small></dd>
+    </dl>
+    <div class="acc" style="margin-top:16px">
+      <button type="button" data-ics="${esc(r.codigo)}">Descargar .ics</button>
+      <button type="button" class="peligro" data-preg="${esc(r.codigo)}">Cancelar mi lugar</button>
+    </div>
+    <p class="err" id="icsMsg" role="status"></p>
+    ${preguntaCancel ? `<div class="preg" role="alertdialog" aria-labelledby="pregT"><p id="pregT"><b>¿Seguro que quieres cancelar?</b> Se libera tu lugar${r.maquina==='taller'?' y la máquina del taller':''}. No se puede deshacer.</p>
+      <div class="acc"><button type="button" class="peligro lleno" data-cancelar="${esc(r.codigo)}">Sí, cancelar mi lugar</button><button type="button" class="sec" data-nopreg>No, conservarlo</button></div></div>` : ''}
+    <p style="margin:16px 0 0"><button type="button" class="sec" data-volver>Ver todas las clases</button></p>
+  </div></div>`;
+  if (preguntaCancel){ const b = v.querySelector('[data-cancelar]'); if (b) b.focus(); }
+}
+function cancelar(codigo){
+  refrescar();
+  const i = db.reservas.findIndex(r => r.codigo === codigo);
+  if (i < 0){ preguntaCancel = false; render(); return; }
+  const r = db.reservas[i], c = clase(r.clase);
+  db.reservas.splice(i, 1); save();
+  preguntaCancel = false;
+  location.hash = 'clases'; render();
+  flash(`Reserva ${r.codigo} cancelada en «${c.nombre}». Se liberó 1 lugar${r.maquina==='taller' ? ' y 1 máquina del taller' : ''}.`);
+}
+
+function render(){
+  const h = location.hash.slice(1);
+  const enConf = /^r-[A-Z0-9]+$/.test(h);
+  $('#vistaClases').hidden = enConf; $('#vistaConf').hidden = !enConf;
+  if (enConf){ flash(''); renderConf(h.slice(2)); window.scrollTo(0,0); }
+  else { preguntaCancel = false; renderClases(); }
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.abrir){ abierta = t.dataset.abrir; flash(''); renderClases(); const n = $('#n-' + abierta); if (n) n.focus(); }
+  else if (t.dataset.cerrar){ abierta = null; renderClases(); }
+  else if (t.hasAttribute('data-volver')){ location.hash = 'clases'; }
+  else if (t.dataset.ics){ const r = db.reservas.find(x => x.codigo === t.dataset.ics); if (r) descargarIcs(r, clase(r.clase)); }
+  else if (t.dataset.preg){ preguntaCancel = true; renderConf(t.dataset.preg); }
+  else if (t.hasAttribute('data-nopreg')){ preguntaCancel = false; renderConf(location.hash.slice(3)); }
+  else if (t.dataset.cancelar){ cancelar(t.dataset.cancelar); }
+  else if (t.id === 'btnReset'){ $('#resetZona').innerHTML = `<span>¿Volver todo al inicio? Se borran todas las reservas y los contadores quedan completos.</span> <button type="button" class="peligro" id="btnResetSi">Sí, restaurar</button> <button type="button" class="sec" id="btnResetNo">No</button>`; }
+  else if (t.id === 'btnResetSi' || t.id === 'btnResetNo'){
+    if (t.id === 'btnResetSi'){ db = seedDb(); save(); drafts = {}; abierta = null; location.hash = 'clases'; render(); flash('Datos sintéticos restaurados: todo volvió al inicio.'); }
+    $('#resetZona').innerHTML = `<button class="lnk" id="btnReset" type="button">Restaurar datos sintéticos</button>`;
+  }
+});
+document.addEventListener('input', e => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  const c = clase(f.dataset.form), sel = f.querySelector('input[name=maquina]:checked');
+  drafts[c.id] = {nombre: f.nombre.value, correo: f.correo.value, maquina: sel ? sel.value : ''};
+  $('#t-' + c.id).textContent = money(c.precio + (sel && sel.value === 'taller' ? CARGO_MAQUINA : 0));
+  if (e.target.name === 'maquina') $('#em-' + c.id).textContent = '';
+});
+document.addEventListener('focusout', e => {
+  const f = e.target.closest && e.target.closest('form[data-form]'); if (!f || !['nombre','correo'].includes(e.target.name) || !e.target.value) return;
+  const c = clase(f.dataset.form);
+  const k = e.target.name === 'nombre' ? 'n' : 'e';
+  const campo = e.target;
+  // mostrar el aviso después del toque, para que no mueva lo que se está tocando
+  pendiente = () => { if (!campo.isConnected) return; const tmp = validarCampo(c, f, campo.name);
+    $('#e' + k + '-' + c.id).textContent = tmp; campo.setAttribute('aria-invalid', tmp ? 'true' : 'false'); };
+  if (!ptrDown) setTimeout(correrPendiente, 0);
+});
+let ptrDown = false, pendiente = null;
+function correrPendiente(){ const f = pendiente; pendiente = null; if (f) f(); }
+document.addEventListener('pointerdown', () => { ptrDown = true; }, true);
+['pointerup','pointercancel'].forEach(ev => document.addEventListener(ev, () => { ptrDown = false; setTimeout(correrPendiente, 0); }, true));
+function validarCampo(c, f, campo){
+  const val = f[campo].value.trim();
+  if (campo === 'nombre') return (val.match(/\p{L}/gu) || []).length < 3 ? 'Tu nombre necesita al menos 3 letras.' : '';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) return 'Revisa tu correo: le falta algo. Debe verse así: nombre@correo.com';
+  if (db.reservas.some(r => r.clase === c.id && normCorreo(r.correo) === normCorreo(val))) return 'Con este correo ya hay un lugar apartado en esta clase.';
+  return '';
+}
+document.addEventListener('submit', e => {
+  const f = e.target.closest('form[data-form]'); if (!f) return;
+  e.preventDefault(); reservar(clase(f.dataset.form), f);
+});
+window.addEventListener('hashchange', render);
+window.addEventListener('popstate', render);
+window.addEventListener('storage', ev => { if (ev.key === KEY){ refrescar(); const h = location.hash.slice(1); if (/^r-/.test(h)) renderConf(h.slice(2)); else renderClases(); } });
+
+load();
+$('#avisoStorage').hidden = storageOk;
+render();
+}
+</script>
+</body>
+</html>
